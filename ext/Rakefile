@@ -11,6 +11,7 @@ task :default => :clean do
       filename = File.basename(full_path)
       with_tempfile(filename, full_path) do |temp_file|
         params = { 'Accept-Encoding' => 'identity' }
+        puts url.inspect
         URI.open(url, 'rb', params) do |io|
           temp_file.write(io.read)
         end
