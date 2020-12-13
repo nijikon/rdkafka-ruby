@@ -1,7 +1,6 @@
 require File.expand_path('../../lib/rdkafka/version', __FILE__)
 require "mini_portile2"
 require "fileutils"
-require "openssl"
 
 task :default => :clean do
   # MiniPortile#download_file_http is a monkey patch that removes the download
@@ -12,7 +11,7 @@ task :default => :clean do
       filename = File.basename(full_path)
       with_tempfile(filename, full_path) do |temp_file|
         params = { 'Accept-Encoding' => 'identity' }
-        OpenURI.open_uri(url, 'rb', params) do |io|
+        URI.open(url, 'rb', params) do |io|
           temp_file.write(io.read)
         end
         output
